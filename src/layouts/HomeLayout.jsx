@@ -19,7 +19,7 @@ function HomeLayout({ children }) {
         const element = document.getElementsByClassName("drawer-toggle");
         element[0].checked = false;
         const drawerSide = document.getElementsByClassName("drawer-side");
-        drawerSide[0].style.width = '0';
+        drawerSide[0].style.width = 0;
 
     }
 
@@ -85,7 +85,7 @@ function HomeLayout({ children }) {
                                 </li>
                             ) : (
                             <li className="absolute bottom-4 w-[90%]">
-                                <div clas   sName="w-full flex items-center justify-center">
+                                <div className="w-full flex items-center justify-center">
                                     <button className="btn btn-primary px-4 py-1 font-semibold rounded-md w-full">
                                         <Link to='/user/profile'>
                                             Profile
