@@ -70,7 +70,7 @@ function HomeLayout({ children }) {
                         {
                             !isLoggedIn ? (
                                 <li className="absolute bottom-4 w-[90%]">
-                                    <div clas   sName="w-full flex items-center justify-center">
+                                    <div className="w-full flex items-center justify-center">
                                         <button className="btn btn-primary px-4 py-1 font-semibold rounded-md w-full">
                                             <Link to='/signin'>
                                                 Login
