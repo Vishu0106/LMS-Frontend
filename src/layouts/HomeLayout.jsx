@@ -8,7 +8,6 @@ function HomeLayout({ children }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const isLoggedIn = useSelector((state)=> state?.auth?.isLoggedIn);
-    console.log(isLoggedIn);
     const role = useSelector((state)=>state?.auth?.role);
 
     function chageWidth() {
