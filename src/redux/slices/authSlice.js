@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 import axiosInstance from '../../config/axiosInstance.js'
+import { json } from "react-router-dom";
 const initialState = {
     isLoggedIn : localStorage.getItem("isLoggedIn") ||false ,
     role: localStorage.getItem("role") || "",
@@ -23,10 +24,39 @@ export const createAccount = createAsyncThunk('/auth/signup',async(data)=>{
     }
 })
 
+
+export const login = createAsyncThunk('/auth/sigin',async(data)=>{
+    try {
+        const response = axiosInstance.post("user/login",data);
+        toast.promise(response,{
+            loading: 'wait authenticating you',
+            success: (data) => {
+                return data?.data?.message;
+            },
+            error: 'Failed to authenticate you..!'
+        });
+        return await response;
+    } catch (e) {
+        toast.error(e?.response?.data?.message);
+    }
+})
+
+
+
 const authSlice = createSlice({
     name: "auth",
     initialState,
-    reducers:{}
+    reducers:{},
+    extraReducers:(builder) => {
+        builder.addCase(login.fulfilled,(state, action)=>{
+            localStorage.setItem("data",JSON.stringify(action?.payload?.data));
+            localStorage.setItem("isLoggedIn",true);
+            localStorage.setItem("role", action?.payload?.data?.user?.role);
+            state.isLoggedIn = true;
+            state.role = action?.payload?.data?.user?.role;
+            state.data = action?.payload?.data;
+        })
+    }
 });
 
 export default authSlice.reducer;
