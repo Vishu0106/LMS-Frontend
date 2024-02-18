@@ -67,15 +67,17 @@ const authSlice = createSlice({
         builder.addCase(login.fulfilled,(state, action)=>{
             localStorage.setItem("data",JSON.stringify(action?.payload?.data));
             localStorage.setItem("isLoggedIn",true);
-            localStorage.setItem("role", action?.payload?.data?.user?.role);
+            localStorage.setItem("role", action?.payload?.data?.data?.role);
             state.isLoggedIn = true;
-            state.role = action?.payload?.data?.user?.role;
+            state.role = action?.payload?.data?.data?.role;
             state.data = action?.payload?.data;
         })
         .addCase(logout.fulfilled,(state)=>{
+            localStorage.clear();
             state.isLoggedIn = false;
-            state.role = "",
-            state.data = {}
+            state.role = "";
+            state.data = {};
+
         })
     }
 });
