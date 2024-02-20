@@ -9,7 +9,7 @@ function CourseCard({data}) {
     return(
         <div>
             <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                    <img className="rounded-t-lg" src={data?.thumbnail?.secure_url} alt="Thumbnial" />
+                    <img className="h-48 w-full rounded-tl-lg rounded-tr-lg group:hover:scale=[1,2] transition-all ease-in-out duration-300" src={data?.thumbnail?.secure_url} alt="Thumbnial"  />
                 <div className="p-5">
                         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{data?.title}</h5>
                     <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{data?.description}</p>
