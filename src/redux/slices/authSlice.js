@@ -57,6 +57,32 @@ export const logout = createAsyncThunk('/auth/logout',async(data)=>{
     }
 })
 
+export const updateProfile = createAsyncThunk('/auth/updateProfile',async(data)=>{
+    try {
+        const response = axiosInstance.put(`user/update`,data);
+        toast.promise(response,{
+            loading: 'wait updating your profile',
+            success: (data) => {
+                return data?.data?.message;
+            },
+            error: 'Failed to update profile'
+        });
+        return (await response).data;
+    } catch (e) {
+        toast.error(e?.response?.data?.message);
+    }
+})
+
+export const fetchProfile = createAsyncThunk('/auth/fetchProfile',async(data)=>{
+    try {
+        const response = axiosInstance.get("user/me");
+
+        return await response;
+    } catch (e) {
+        toast.error(e?.message);
+    }
+})
+
 
 
 const authSlice = createSlice({
@@ -64,16 +90,14 @@ const authSlice = createSlice({
     initialState,
     reducers:{},
     extraReducers:(builder) => {
-        console.log("extraReducers");
         builder.addCase(login.fulfilled,(state, action)=>{
+            console.log("Login data : -",action?.payload?.data);
             localStorage.setItem("data",JSON.stringify(action?.payload?.data));
             localStorage.setItem("isLoggedIn",true);
             localStorage.setItem("role", action?.payload?.data?.user?.role);
             state.isLoggedIn = true;
             state.role = action?.payload?.data?.user?.role;
             state.data = action?.payload?.data;
-            console.log(action?.payload?.data);
-            console.log(action?.payload?.data?.user?.role);
         })
         .addCase(logout.fulfilled,(state)=>{
             localStorage.clear();
@@ -81,6 +105,16 @@ const authSlice = createSlice({
             state.role = "";
             state.data = {};
 
+        })
+        .addCase(fetchProfile.fulfilled,(state,action)=>{
+            if(action?.payload?.data){
+                localStorage.setItem("data",JSON.stringify(action?.payload?.data));
+                localStorage.setItem("isLoggedIn",true);
+                localStorage.setItem("role", action?.payload?.data?.user?.role);
+                state.data = action?.payload?.data?.user;
+                state.isLoggedIn = true;
+                state.role = action?.payload?.data?.user?.role;
+            }
         })
     }
 });

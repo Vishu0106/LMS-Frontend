@@ -8,6 +8,9 @@ function Profile() {
 
     const userData = useSelector(state => state?.auth?.data);
 
+
+
+
     return (
         <HomeLayout>
             <div className="min-h-[90vh] flex items-center justify-center">
