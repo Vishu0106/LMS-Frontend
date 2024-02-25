@@ -15,9 +15,10 @@ const initialState = {
 export const getRazorPayId = createAsyncThunk("/razorPay/getId" , async () => {
     try {
         const response = await axiosInstance.get("/payments/razorpay-key");
+        console.log(await response.data);
         return response.data;
     } catch (error){
-        toast.error(error?.data?.message);
+        toast.error("failed to get the razorpay key.");
     }
 });
 
@@ -26,22 +27,22 @@ export const purchaseCourseBundel = createAsyncThunk("/purchaseCourse" , async (
         const response = await axiosInstance.post("/payments/subscribe");
         return response.data;
     } catch (error){
-        toast.error(error?.data?.message);
+        toast.error(error?.response?.data?.message);
     }
 });
 
-export const verifyUserPayment = createAsyncThunk("/payments/record" , async (data) => {
+export const getPaymentRecord = createAsyncThunk("/payments/record" , async () => {
     try {
-        const response = await axiosInstance.get("/payments/?count=100");
+        const response = await axiosInstance.get("/payments?count=100");
         toast.promise(response,{
-            loading: "Getting the paykment record...",
+            loading: "Getting the payment record...",
             success: (data)=>{
                 return data?.data?.message;
             },
             error: "Failed to get the payment record."
         
         })
-        return response.data;
+        return (await response).data;
     } catch (error){
         toast.error("Operation failed. Please try again.");
     }
@@ -58,20 +59,17 @@ export const cancelCourseBundle = createAsyncThunk("/payments/unsubscribe" , asy
             error: "Failed to unsubscribe the bundel..."
         
         })
-        return response.data;
+        return (await response).data;
     } catch (error){
         toast.error(error?.response?.data?.message);
     }
 });
 
-export const getPaymentRecord = createAsyncThunk("/payments/record" , async () => {
+export const verifyUserPayment = createAsyncThunk("/payments/verify" , async (data) => {
     try {
-        const response = await axiosInstance.get("/payments/verify",{
-            razorpay_payment_id : data.razorpay_payment_id,
-            razorpaySubscription_id : data.razorpaySubscription_id,
-            razorpay_signature: data.razorpay_signature
-        });
-        return response.data;
+        const response = await axiosInstance.post("/payments/verify",data);
+        console.log("verify response",response);
+        return response;
     } catch (error){
         toast.error(error?.data?.message);
     }
@@ -94,7 +92,7 @@ const razorPaySlice = createSlice({
             state.isPaymentVerified = action?.payload?.success;
         })
         .addCase(verifyUserPayment.rejected, (state, action) => { 
-            toast.error(action?.payload?.message);
+            toast.error("verification of payment failed. Please try again.");
             state.isPaymentVerified = action?.payload?.success;
         })
         .addCase(getPaymentRecord.fulfilled, (state, action) => {

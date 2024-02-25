@@ -29,7 +29,7 @@ function CourseDescription() {
                                 </p>
 
                             </div>
-                            {role == "ADMIN" || data?.user?.subscription?.status === 'created'? (
+                            {role == "ADMIN" || data?.user?.subscription?.status === 'active'? (
                                 <button
                                     onClick={() => navigate("/course/displaylectures", {state: {...state}})}
                                     className="bg-yellow-500 text-xl rounded-md font-bold px-5 py-3 w-full hover:bg-yellow-600 transition-all ease-in-out duration-300"
