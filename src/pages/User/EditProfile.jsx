@@ -62,7 +62,6 @@ function EditProfile() {
         await dispatch(updateProfile(formData));
         await dispatch(fetchProfile());
         navigate('/user/profile');
-        window.location.reload();
     }
 
   return (

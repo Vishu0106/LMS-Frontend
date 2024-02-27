@@ -73,7 +73,7 @@ export const updateProfile = createAsyncThunk('/auth/updateProfile',async(data)=
     }
 })
 
-export const fetchProfile = createAsyncThunk('/auth/fetchProfile',async(data)=>{
+export const fetchProfile = createAsyncThunk('/auth/fetchProfile',async()=>{
     try {
         const response = axiosInstance.get("user/me");
 
