@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import axiosInstance from "../../config/axiosInstance";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const intialState = {
     lectures: []
@@ -9,7 +9,7 @@ const intialState = {
 
 export const fetchLectures = createAsyncThunk("/course/lecture/get" , async (cid) => {
     try {
-        const response = axiosInstance.get(`/course/${cid}`);
+        const response = axiosInstance.get(`/courses/${cid}`);
         toast.promise(response, {
             loading: "Fetching lectures",
             success: "Lectures fetched successfully",
@@ -45,7 +45,7 @@ export const addCourseLecture = createAsyncThunk("/course/lecture/add" , async (
 export const deleteCourseLecture = createAsyncThunk("/course/lecture/delete" , async (data) => {
 
     try {
-        const response = axiosInstance.delete(`/courses?courseId=${data.courseId}&lectureId=${data.lectureId}`);
+        const response = axiosInstance.delete(`/courses/remove-lecture/${data.courseId}/${data.lectureId}`);
         toast.promise(response, {
             loading: "Deleting lecture",
             success: "Lecture deleted successfully",
