@@ -32,7 +32,7 @@ function ContactUs() {
             return;
         }
         try {
-            const response = axiosInstance.post("/contact", userInput);
+            const response = axiosInstance.post("/contactus", userInput);
             toast.promise(response, {
                 loading: "Submitting your query",
                 success: "Form submitted successfully",
