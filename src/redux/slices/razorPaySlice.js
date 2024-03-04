@@ -6,7 +6,7 @@ const initialState = {
     key:"",
     subscription_id:"",
     isPaymentVerified:false,
-    allPyaments:{},
+    allPayments:{},
     finalMonths:{},
     monthlySalesRecord:[]
 };
@@ -33,18 +33,16 @@ export const purchaseCourseBundel = createAsyncThunk("/purchaseCourse" , async (
 
 export const getPaymentRecord = createAsyncThunk("/payments/record" , async () => {
     try {
-        const response = await axiosInstance.get("/payments?count=100");
+        const response =  axiosInstance.get("/payments?count=100");
         toast.promise(response,{
-            loading: "Getting the payment record...",
-            success: (data)=>{
-                return data?.data?.message;
-            },
-            error: "Failed to get the payment record."
+            loading: "Fetching the payment records...",
+            success: "Payment records fetched successfully...",
+            error: "Failed to fetch payment records..."
         
         })
         return (await response).data;
     } catch (error){
-        toast.error("Operation failed. Please try again.");
+        toast.error(error?.response?.data?.message);
     }
 });
 
@@ -95,9 +93,11 @@ const razorPaySlice = createSlice({
             state.isPaymentVerified = action?.payload?.success;
         })
         .addCase(getPaymentRecord.fulfilled, (state, action) => {
-            state.allPyaments = action?.payload?.allPyaments;
+            console.log("payents: razorpay", action?.payload?.allPayments);
+            state.allPayments = action?.payload?.allPayments;
             state.finalMonths = action?.payload?.finalMonths;
             state.monthlySalesRecord = action?.payload?.monthlySalesRecord;
+            console.log(action?.payload);
         })
 
     }

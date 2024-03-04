@@ -21,6 +21,7 @@ import CheckoutSuccess from './pages/Payment/CheckoutSuccess'
 import CheckoutFail from './pages/Payment/CheckoutFail'
 import DisplayLecture from './pages/Dashboard/DisplayLecture'
 import AddLecture from './pages/Dashboard/AddLecture'
+import AdminDashboard from './pages/Dashboard/AdminDashboard'
 
 function App() {
 
@@ -34,7 +35,7 @@ function App() {
         <Route path='/contact' element={<ContactUs />}/>
         <Route path='/denied' element={<Denied/>}/>
         <Route path='/courses' element={<CourseList />}></Route>
-        <Route path='/course/description' element={<CourseDescription />}></Route>
+        <Route path='/course/description' element={<CourseDescription />} />
         <Route element={<RequireAuth allowedRoles={["ADMIN","USER"]}/>}>
         <Route path='/user/profile' element={<Profile />}/> 
         <Route path='/user/editprofile' element={<EditProfile />}/>
@@ -45,7 +46,8 @@ function App() {
         <Route path='/course/addlecture' element={<AddLecture />}/>
         </Route>
         <Route element={<RequireAuth allowedRoles={["ADMIN"]}/>}>
-          <Route path='/course/create' element={<CreateCourse />}></Route>
+          <Route path='/course/create' element={<CreateCourse />} />
+          <Route path='/admin/dashboard' element={<AdminDashboard />}/>
         </Route>
         <Route path='*' element={<NotFound />}/>
 

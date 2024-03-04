@@ -1,30 +1,28 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import toast from 'react-hot-toast';
-import axiosInatance from '../../axiosInstance.js';
-
+import axiosInstance from '../../config/axiosInstance.js';
 const initialState = {
-    allUSersCount: 0,
-    SubscriberCount: 0,
+    allUsersCount: 0,
+    subscriberCount: 0,
 }
 
 
-export const fetchUserStats = createAsyncThunk('/admin/stats/get',async() => {
-
+export const fetchUserStats = createAsyncThunk("stats/get" , async () => {
     try {
-
-        const response = await axiosInatance.get('/admin/stats/users');
-        toast.promise(response, {
-            loading: 'Fetching user stats',
-            success: 'User stats fetched successfully',
-            error: 'Failed to fetch user stats'
+        const response =  axiosInstance.get("/admin/stats/users");
+        await toast.promise(response,{
+            loading: "Fetching the user stats...",
+            success: (data)=>{
+                return data?.data?.message;
+            },
+            error: "Failed to fetch user stats..."
         });
-        return await (response).data;
-        
-    } catch (error) {
-        toast.error('Failed to fetch user stats');
+        return (await response).data;
+    } catch (error){
+        console.log("error", error);
+        toast.error(error?.response?.data?.message);
     }
-
-});
+})
 
  const userStatsSlice = createSlice({
     name: 'userStats',
@@ -32,8 +30,11 @@ export const fetchUserStats = createAsyncThunk('/admin/stats/get',async() => {
     reducers:{},
     extraReducers:(builder)=>{
         builder.addCase(fetchUserStats.fulfilled, (state, action) => {
-            state.allUSersCount = action.payload.allUSersCount;
-            state.SubscriberCount = action.payload.SubscriberCount;
+            console.log("payload", action.payload);
+            state.allUsersCount = action.payload?.allUsersCount;
+            state.subscriberCount = action.payload?.
+            subscribersCount;
+            
         });
     }
 });
