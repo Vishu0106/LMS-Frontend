@@ -22,6 +22,7 @@ import CheckoutFail from './pages/Payment/CheckoutFail'
 import DisplayLecture from './pages/Dashboard/DisplayLecture'
 import AddLecture from './pages/Dashboard/AddLecture'
 import AdminDashboard from './pages/Dashboard/AdminDashboard'
+import Chat from './pages/Chat'
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
         <Route path='/contact' element={<ContactUs />}/>
         <Route path='/denied' element={<Denied/>}/>
         <Route path='/courses' element={<CourseList />}></Route>
+        <Route path='/doubtsupport' element={<Chat />}/>
         <Route path='/course/description' element={<CourseDescription />} />
         <Route element={<RequireAuth allowedRoles={["ADMIN","USER"]}/>}>
         <Route path='/user/profile' element={<Profile />}/> 

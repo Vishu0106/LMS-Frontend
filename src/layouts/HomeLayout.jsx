@@ -80,6 +80,9 @@ function HomeLayout({ children }) {
                         <li>
                             <Link to='/courses'>Courses</Link>
                         </li>
+                        <li>
+                            <Link to='/doubtsupport'>Ask Doubt</Link>
+                        </li>
                         {
                             !isLoggedIn ? (
                                 <li className="absolute bottom-4 w-[90%]">
