@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import {BiRupee} from "react-icons/bi";
 import { useEffect } from "react";
-import { getRazorPayId, purchaseCourseBundel, verifyUserPayment } from "../../redux/slices/razorpaySlice";
+import { getRazorPayId, purchaseCourseBundel, verifyUserPayment } from "../../redux/slices/razorpaySlice.js";
 
 function Checkout() {
 
