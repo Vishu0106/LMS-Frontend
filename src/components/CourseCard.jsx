@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import vishwaSir from '../assets/images/Vishwasir.jpg'
 import { IoArrowForward } from "react-icons/io5";
 
 function CourseCard({data}) {
